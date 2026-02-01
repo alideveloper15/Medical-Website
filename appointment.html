@@ -157,7 +157,7 @@
               </div>
 
               <div class="appointment-form" data-aos="fade-up" data-aos-delay="400">
-                <form action="forms/book-appointment.php" method="post" class="php-email-form">
+                <form class="form" >
                   <div class="row gy-4">
                     <div class="col-md-6">
                       <input type="text" name="name" class="form-control" placeholder="Full Name" required="" >
@@ -166,18 +166,18 @@
                       <input type="email" name="email" class="form-control" placeholder="Email Address" required="">
                     </div>
                     <div class="col-md-6">
-                      <input type="tel" name="phone" class="form-control" placeholder="Phone Number" required="">
+                      <input type="text" name="phone" class="form-control" placeholder="Phone Number" required="">
                     </div>
                     <div class="col-md-6">
                       <select name="department" class="form-select" required="">
                         <option value="">Select Department</option>
-                        <option value="general">General Consultation</option>
-                        <option value="cardiology">Cardiology</option>
-                        <option value="neurology">Neurology</option>
-                        <option value="orthopedics">Orthopedics</option>
-                        <option value="pediatrics">Pediatrics</option>
-                        <option value="dermatology">Dermatology</option>
-                        <option value="oncology">Oncology</option>
+                        <option value="General Consultation">General Consultation</option>
+                        <option value="Cardiology">Cardiology</option>
+                        <option value="Neurology">Neurology</option>
+                        <option value="Orthopedics">Orthopedics</option>
+                        <option value="Pediatrics">Pediatrics</option>
+                        <option value="Dermatology">Dermatology</option>
+                        <option value="Oncology">Oncology</option>
                       </select>
                     </div>
                     <div class="col-md-6">
@@ -186,13 +186,13 @@
                     <div class="col-md-6">
                       <select name="doctor" class="form-select" required="">
                         <option value="">Select Doctor</option>
-                        <option value="dr-sarah-johnson">Dr. Sarah Johnson</option>
-                        <option value="dr-michael-chen">Dr. Michael Chen</option>
-                        <option value="dr-emily-davis">Dr. Emily Davis</option>
-                        <option value="dr-robert-smith">Dr. Robert Smith</option>
-                        <option value="dr-lisa-brown">Dr. Lisa Brown</option>
-                        <option value="dr-david-wilson">Dr. David Wilson</option>
-                        <option value="dr-maria-rodriguez">Dr. Maria Rodriguez</option>
+                        <option value="Dr. Sarah Johnson">Dr. Sarah Johnson</option>
+                        <option value="Dr. Michael Chen">Dr. Michael Chen</option>
+                        <option value="Dr. Emily Davis">Dr. Emily Davis</option>
+                        <option value="Dr. Robert Smith">Dr. Robert Smith</option>
+                        <option value="Dr. Lisa Brown">Dr. Lisa Brown</option>
+                        <option value="Dr. David Wilson">Dr. David Wilson</option>
+                        <option value="Dr. Maria Rodriguez">Dr. Maria Rodriguez</option>
                       </select>
                     </div>
                     <div class="col-12">
@@ -359,7 +359,7 @@
 
   <!-- Vendor JS Files -->
   <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="assets/vendor/php-email-form/validate.js"></script>
+  <!-- <script src="assets/vendor/php-email-form/validate.js"></script> -->
   <script src="assets/vendor/aos/aos.js"></script>
   <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
   <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
@@ -367,7 +367,7 @@
 
   <!-- Main JS File -->
   <script src="assets/js/main.js"></script>
-  <script type="module" src="scripts/appointment.js"></script>
+  <script defer type="module" src="scripts/appointment.js"></script>
 
 </body>
 
