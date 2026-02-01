@@ -150,7 +150,6 @@
 
 
 
-
 import { supabase } from "../../scripts/supabase-client.js";
 import { initAuth } from "../../scripts/authentication.js";
 
@@ -160,44 +159,39 @@ window.addEventListener("DOMContentLoaded", async () => {
   const homeContent = document.getElementById("home-content");
   const logoutBtn = document.getElementById("logout-btn");
 
-  if (!formWrapper || !mainContainer || !homeContent || !logoutBtn) return;
-
   let session = null;
 
   const render = () => {
-    if (!formWrapper || !homeContent || !logoutBtn) return;
+    if (formWrapper) formWrapper.style.display = session ? "none" : "flex";
+    if (homeContent) homeContent.style.display = session ? "block" : "none";
+    if (logoutBtn) logoutBtn.style.display = session ? "inline-block" : "none";
 
-    if (session) {
-      formWrapper.style.display = "none";
-      homeContent.style.display = "block";
-      logoutBtn.style.display = "inline-block";
-    } else {
-      formWrapper.style.display = "flex";
-      homeContent.style.display = "none";
-      logoutBtn.style.display = "none";
-
-      if (!mainContainer.hasChildNodes()) {
-        initAuth(mainContainer);
-      }
+    if (!session && mainContainer && !mainContainer.hasChildNodes() && formWrapper) {
+      initAuth(mainContainer);
     }
   };
 
-  const fetchSession = async () => {
+  const updateSession = async () => {
     const { data } = await supabase.auth.getSession();
     session = data.session;
     render();
   };
 
-  logoutBtn.addEventListener("click", async () => {
-    await supabase.auth.signOut();
-    session = null;
-    render();
-  });
+  if (logoutBtn) {
+    logoutBtn.addEventListener("click", async () => {
+      const { error } = await supabase.auth.signOut();
+      if (!error) {
+        session = null;
+        render();
+        window.location.href = "index.html";
+      }
+    });
+  }
 
   supabase.auth.onAuthStateChange((_event, newSession) => {
     session = newSession;
     render();
   });
 
-  await fetchSession();
+  await updateSession();
 });
