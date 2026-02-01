@@ -6,8 +6,6 @@
 * License: https://bootstrapmade.com/license/
 */
 
-import { logout } from "../../scripts/authentication";
-
 (function() {
   "use strict";
 
@@ -147,3 +145,66 @@ import { logout } from "../../scripts/authentication";
   });
 })();
 
+
+
+
+
+
+
+
+import { supabase } from "../../scripts/supabase-client.js";
+import { initAuth } from "../../scripts/authentication.js";
+
+window.addEventListener("DOMContentLoaded", () => {
+  const authContainer = document.getElementById("main-container");
+  const homeContent = document.getElementById("home-content");
+  const logoutBtn = document.getElementById("logout-btn");
+  let session = null;
+
+  function render() {
+    if (session) {
+      // User is logged in
+      authContainer.style.display = "none";   // hide Auth form
+      homeContent.style.display = "block";    // show home content
+      logoutBtn.style.display = "inline-block"; // show logout button
+    } else {
+      // User is logged out
+      authContainer.style.display = "block";  // show Auth form
+      homeContent.style.display = "none";     // hide home content
+      logoutBtn.style.display = "none";       // hide logout button
+      initAuth(authContainer);                // inject login/signup form
+    }
+  }
+
+  // Logout button logic
+  if (logoutBtn) {
+    logoutBtn.addEventListener("click", async () => {
+      const { error } = await supabase.auth.signOut();
+      if (error) alert("Logout failed: " + error.message);
+      else {
+        session = null;
+        render();
+      }
+    });
+  }
+
+  // Fetch initial session
+  async function fetchSession() {
+    const { data } = await supabase.auth.getSession();
+    session = data.session;
+    render();
+  }
+
+  // Listen for auth changes
+  const { data: authListener } = supabase.auth.onAuthStateChange((_event, newSession) => {
+    session = newSession;
+    render();
+  });
+
+  fetchSession();
+
+  // Clean up
+  window.addEventListener("beforeunload", () => {
+    authListener.subscription.unsubscribe();
+  });
+});
