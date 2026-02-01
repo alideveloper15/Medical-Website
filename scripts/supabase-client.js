@@ -5,6 +5,7 @@ export const supabase = createClient(
   "sb_publishable_OHE3jRwu2msedg5wATP7bg_Hmj8MstZ"
 )
 
+
 // async function loginUser({email, password}) {
 //   const {data, error} = await supabase
 //     .auth
