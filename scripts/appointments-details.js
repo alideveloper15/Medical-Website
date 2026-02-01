@@ -25,8 +25,6 @@ const fetchAppointments = async () => {
     return;
   }
 
-  console.log(data)
-
   const container = document.querySelector('.appointments-details');
   if (!container) return;
 
