@@ -45,7 +45,7 @@ export function initAuth(container) {
         console.error("Error signing up:", error.message);
         alert("Sign Up failed: " + error.message);
       } else {
-        alert("Sign Up successful! Check your email.");
+        alert("Sign Up successful!");
       }
     } else {
       const { error } = await supabase.auth.signInWithPassword({ email, password });
@@ -58,7 +58,6 @@ export function initAuth(container) {
     }
   });
 
-  // Toggle between Sign In / Sign Up
   toggleBtn.addEventListener("click", () => {
     isSignUp = !isSignUp;
     updateUI();

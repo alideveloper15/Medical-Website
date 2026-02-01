@@ -162,21 +162,22 @@ window.addEventListener("DOMContentLoaded", () => {
   let session = null;
 
   function render() {
-    if (session) {
-      // User is logged in
-      authContainer.style.display = "none";   // hide Auth form
-      homeContent.style.display = "block";    // show home content
-      logoutBtn.style.display = "inline-block"; // show logout button
-    } else {
-      // User is logged out
-      authContainer.style.display = "block";  // show Auth form
-      homeContent.style.display = "none";     // hide home content
-      logoutBtn.style.display = "none";       // hide logout button
-      initAuth(authContainer);                // inject login/signup form
-    }
-  }
+  const formWrapper = document.getElementById("form-wrapper");
 
-  // Logout button logic
+  if (session) {
+    formWrapper.style.display = "none";
+    homeContent.style.display = "block";      
+    logoutBtn.style.display = "inline-block"; 
+  } else {
+    formWrapper.style.display = "flex";    
+    homeContent.style.display = "none";      
+    logoutBtn.style.display = "none";         
+    initAuth(authContainer);                  
+  }
+}
+
+
+  
   if (logoutBtn) {
     logoutBtn.addEventListener("click", async () => {
       const { error } = await supabase.auth.signOut();
@@ -188,14 +189,14 @@ window.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Fetch initial session
+  
   async function fetchSession() {
     const { data } = await supabase.auth.getSession();
     session = data.session;
     render();
   }
 
-  // Listen for auth changes
+  
   const { data: authListener } = supabase.auth.onAuthStateChange((_event, newSession) => {
     session = newSession;
     render();
