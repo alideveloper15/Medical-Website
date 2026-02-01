@@ -4826,6 +4826,23 @@ section,
   cursor: pointer;
 }
 
+.ad-btn{
+  background-color: var(--accent-color);
+  color: var(--contrast-color);
+  padding: 10px 30px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  transition: all 0.3s ease;
+  width: 40%;
+  cursor: pointer;
+  margin-bottom: 5px;
+  margin-top: 5px;
+}
+
 .appointmnet .appointment-form .php-email-form .btn-book:hover {
   background-color: color-mix(in srgb, var(--accent-color), black 10%);
   transform: translateY(-2px);

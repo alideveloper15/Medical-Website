@@ -20,9 +20,13 @@ const fetchAppointments = async () => {
 
   appointments.forEach((appointment) => {
     appointmentsDetails += `
-      <div class="row gy-4"  style="border: 2px solid gray; border-radius: 15px; padding-left: 5px; margin-bottom: 35px;">
-        <div class="col-12">
-          <h2 style="text-align: center;">Appointment Details</h2>
+      <div class="row gy-4"  style="border: 2px solid gray; border-radius: 15px; padding-left: 5px; margin-bottom: 40px;">
+        <div class="col-12 row" style="padding-top: 10px">
+          <h2 style="text-align: center; font-weight: bolder">Appointment Details</h2>
+          <div class="d-flex justify-content-between align-items-center">
+            <button type="button" class="edit-btn ad-btn">Edit</button>
+            <button type="button" class="delete-btn ad-btn" data-id="${appointment.id}">Delete</button>
+          </div>
         </div>
         <div class="col-md-6" style="margin-bottom: -35px; font-weight: bold;">  
           <p>Name</p>
@@ -72,13 +76,38 @@ const fetchAppointments = async () => {
     `;
   });
 
-  document.querySelector('.appointments-details').innerHTML = appointmentsDetails;
+  const container = document.querySelector('.appointments-details');
+  if (!container) return;
+
+  container.innerHTML = appointmentsDetails;
+
+
+  document.querySelectorAll('.delete-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const id = parseInt(btn.getAttribute('data-id'));
+      deleteAppointment(id);
+    });
+  });
+
+  
 }
 
-// This runs once when the page is fully loaded
+
+
+
+const deleteAppointment = async (id) => {
+  const { error } = await supabase.from('appointments').delete().eq("id", id);
+
+  if (error) {
+    console.error("Error deleting appointment", error.message);
+    return;
+  }
+
+  fetchAppointments()
+}
+
+
+
 window.addEventListener('DOMContentLoaded', () => {
   fetchAppointments();
 });
-
-
-

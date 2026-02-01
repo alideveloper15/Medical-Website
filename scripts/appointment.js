@@ -52,6 +52,8 @@ const handleSubmit = async () => {
     message: ""
   };
 
+  window.location.href = 'appointments-details.html'
+
 }
 
 
