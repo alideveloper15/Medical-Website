@@ -1,5 +1,4 @@
-import { supabase } from  './supabase-client.js'
-
+import { supabase } from './supabase-client.js'
 
 let newAppointment = {
   name: "",
@@ -11,10 +10,8 @@ let newAppointment = {
   message: ""
 };
 
-
 function handleInput(e) {
   const { name, value } = e.target;
-
   newAppointment = {
     ...newAppointment,
     [name]: value
@@ -27,19 +24,24 @@ document.querySelectorAll("input, textarea, select")
     el.addEventListener("change", handleInput);
 });
 
-
 document.querySelector(".form").addEventListener("submit", (e) => {
   e.preventDefault();
-  handleSubmit()
+  handleSubmit();
 });
 
-
 const handleSubmit = async () => {
-  const {error} = await supabase.from('appointments').insert(newAppointment).single()
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) return;
 
+  const appointmentToInsert = {
+    ...newAppointment,
+    user_id: user.id
+  };
+
+  const { error } = await supabase.from('appointments').insert(appointmentToInsert).single();
   if (error) {
-    console.error("Error adding appointment", error.message)
-    return
+    console.error("Error adding appointment", error.message);
+    return;
   }
 
   newAppointment = {
@@ -52,9 +54,6 @@ const handleSubmit = async () => {
     message: ""
   };
 
-  window.location.href = 'appointments-details.html'
-
-}
-
-
-
+  document.querySelector(".form").reset();
+  window.location.href = 'appointments-details.html';
+};

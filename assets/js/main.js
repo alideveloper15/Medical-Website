@@ -162,19 +162,23 @@ window.addEventListener("DOMContentLoaded", () => {
   let session = null;
 
   function render() {
-  const formWrapper = document.getElementById("form-wrapper");
+    const formWrapper = document.getElementById("form-wrapper");
+    const homeContent = document.getElementById("home-content");
+    const logoutBtn = document.getElementById("logout-btn");
 
-  if (session) {
-    formWrapper.style.display = "none";
-    homeContent.style.display = "block";      
-    logoutBtn.style.display = "inline-block"; 
-  } else {
-    formWrapper.style.display = "flex";    
-    homeContent.style.display = "none";      
-    logoutBtn.style.display = "none";         
-    initAuth(authContainer);                  
+    if (!formWrapper) return;
+
+    if (session) {
+      formWrapper.style.display = "none";
+      if (homeContent) homeContent.style.display = "block";
+      if (logoutBtn) logoutBtn.style.display = "inline-block";
+    } else {
+      formWrapper.style.display = "flex";
+      if (homeContent) homeContent.style.display = "none";
+      if (logoutBtn) logoutBtn.style.display = "none";
+    }
   }
-}
+
 
 
   
