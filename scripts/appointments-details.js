@@ -11,12 +11,19 @@ const fields = [
 ];
 
 const fetchAppointments = async () => {
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) return;
+
   const { data, error } = await supabase
     .from('appointments')
     .select('*')
+    .eq('user_id', user.id)
     .order('created_at', { ascending: true });
 
-  if (error) return console.error("Error reading appointments", error.message);
+  if (error) {
+    console.error(error.message);
+    return;
+  }
 
   const container = document.querySelector('.appointments-details');
   if (!container) return;
@@ -41,15 +48,19 @@ const fetchAppointments = async () => {
     `;
   }).join('');
 
+  attachHandlers(container);
+};
+
+const attachHandlers = (container) => {
   container.querySelectorAll('.delete-btn').forEach(btn => {
-    btn.addEventListener('click', (e) => {
+    btn.addEventListener('click', e => {
       e.preventDefault();
       deleteAppointment(parseInt(btn.dataset.id));
     });
   });
 
   container.querySelectorAll('.edit-btn').forEach(btn => {
-    btn.addEventListener('click', (e) => {
+    btn.addEventListener('click', e => {
       e.preventDefault();
       toggleEdit(btn.closest('.appointment-row'), btn);
     });
@@ -57,18 +68,26 @@ const fetchAppointments = async () => {
 };
 
 const deleteAppointment = async (id) => {
-  const { error } = await supabase.from('appointments').delete().eq('id', id);
-  if (error) return console.error("Error deleting appointment", error.message);
+  const { error } = await supabase
+    .from('appointments')
+    .delete()
+    .eq('id', id);
+
+  if (error) {
+    console.error(error.message);
+    return;
+  }
+
   fetchAppointments();
 };
 
 const toggleEdit = (row, btn) => {
-  if (btn.textContent === "Edit") {
+  if (btn.textContent === 'Edit') {
     fields.forEach(f => {
-      const p = row.querySelector(`.${f.key}`);
-      p.innerHTML = `<input type="text" class="edit-${f.key}" value="${p.textContent}" />`;
+      const el = row.querySelector(`.${f.key}`);
+      el.innerHTML = `<input type="text" class="edit-${f.key}" value="${el.textContent}" />`;
     });
-    btn.textContent = "Save";
+    btn.textContent = 'Save';
   } else {
     const updatedData = {};
     fields.forEach(f => {
@@ -79,8 +98,16 @@ const toggleEdit = (row, btn) => {
 };
 
 const updateAppointment = async (id, data) => {
-  const { error } = await supabase.from('appointments').update(data).eq('id', id);
-  if (error) return console.error("Error updating appointment", error.message);
+  const { error } = await supabase
+    .from('appointments')
+    .update(data)
+    .eq('id', id);
+
+  if (error) {
+    console.error(error.message);
+    return;
+  }
+
   fetchAppointments();
 };
 
