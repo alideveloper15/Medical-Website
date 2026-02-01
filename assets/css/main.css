@@ -141,6 +141,96 @@ h6 {
   }
 }
 
+
+
+/* FORM */
+
+#main-container {
+  width: 100%;
+  max-width: 400px;
+  padding: 2rem;
+  border-radius: 12px;
+  background-color: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+#main-container:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
+}
+
+#auth-title {
+  margin-bottom: 1.5rem;
+  font-size: 1.7rem;
+  font-weight: 600;
+  color: #333;
+}
+
+#auth-form input {
+  width: 100%;
+  padding: 0.75rem;
+  margin-bottom: 1rem;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+#auth-form input:focus {
+  border-color: #0070f3;
+  box-shadow: 0 0 5px rgba(0, 112, 243, 0.4);
+  outline: none;
+}
+
+#submit-btn {
+  width: 100%;
+  padding: 0.75rem;
+  border: none;
+  border-radius: 8px;
+  background-color: #0070f3;
+  color: white;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+#submit-btn:hover {
+  background-color: #005ac1;
+}
+
+#toggle-btn {
+  width: 100%;
+  padding: 0.65rem;
+  margin-top: 0.5rem;
+  border: 1px solid #0070f3;
+  border-radius: 8px;
+  background-color: white;
+  color: #0070f3;
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+#toggle-btn:hover {
+  background-color: #0070f3;
+  color: white;
+}
+
+@media screen and (max-width: 500px) {
+  #main-container {
+    padding: 1.5rem;
+    width: 90%;
+  }
+
+  #auth-title {
+    font-size: 1.5rem;
+  }
+}
+
+
 /*--------------------------------------------------------------
 # Global Header
 --------------------------------------------------------------*/
