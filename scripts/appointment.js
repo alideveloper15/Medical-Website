@@ -8,7 +8,7 @@ let appointment = {
   department: "",
   date: "",
   doctor: "",
-  description: ""
+  message: ""
 };
 
 function handleInput(e) {
@@ -50,7 +50,7 @@ const handleSubmit = async (e) => {
   //   department: "",
   //   date: "",
   //   doctor: "",
-  //   description: ""
+  //   message: ""
   // };
 
 }
