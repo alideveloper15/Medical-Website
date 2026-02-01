@@ -28,6 +28,12 @@ const fetchAppointments = async () => {
   const container = document.querySelector('.appointments-details');
   if (!container) return;
 
+  if (!data || data.length === 0) {
+    container.innerHTML = `<h2 style="text-align: center" class="no-appointments">No Appointment Yet :(</h2>`;
+    return;
+  }
+
+
   container.innerHTML = data.map(appointment => {
     const gridItems = fields.map(f => `
       <div class="label">${f.label}</div>
