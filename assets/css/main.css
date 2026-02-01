@@ -142,6 +142,82 @@ h6 {
 }
 
 
+/* APPOINTMENTS-DETIAILS-GRID */
+
+.appointment-row {
+  border: 2px solid gray;
+  border-radius: 15px;
+  padding: 15px;
+  margin-bottom: 40px;
+  background-color: #fff;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.appointment-row h2 {
+  text-align: center;
+  margin-bottom: 15px;
+  font-weight: bold;
+}
+
+/* Grid for label/value pairs */
+.appointment-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px 20px;
+  margin-bottom: 15px;
+}
+
+.appointment-grid .label {
+  font-weight: bold;
+}
+
+.appointment-grid .value {
+  color: gray;
+}
+
+/* Buttons container */
+.appointment-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.appointment-actions button {
+  padding: 5px 10px;
+  border-radius: 5px;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.edit-btn {
+  background-color: #0070f3;
+  color: white;
+}
+
+.delete-btn {
+  background-color: #ff4d4f;
+  color: white;
+}
+
+/* Responsive: stack labels/values on mobile */
+@media screen and (max-width: 600px) {
+  .appointment-grid {
+    grid-template-columns: 1fr; /* single column */
+  }
+
+  .appointment-actions {
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .appointment-actions button {
+    width: 48%;
+  }
+}
+
+
 
 /* FORM */
 
