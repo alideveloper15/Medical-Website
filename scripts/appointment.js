@@ -1,7 +1,7 @@
 import { supabase } from  './supabase-client.js'
 
 
-let appointment = {
+let newAppointment = {
   name: "",
   email: "",
   phone: "",
@@ -11,15 +11,14 @@ let appointment = {
   message: ""
 };
 
+
 function handleInput(e) {
   const { name, value } = e.target;
 
-  appointment = {
-    ...appointment,
+  newAppointment = {
+    ...newAppointment,
     [name]: value
   };
-
-  console.log(appointment);
 }
 
 document.querySelectorAll("input, textarea, select")
@@ -31,26 +30,53 @@ document.querySelectorAll("input, textarea, select")
 
 document.querySelector(".form").addEventListener("submit", (e) => {
   e.preventDefault();
-  // console.log("Final appointment data:", appointment);
   handleSubmit()
 });
 
 
-const handleSubmit = async (e) => {
-  const {error} = await supabase.from('appointments').insert(appointment).single()
+const handleSubmit = async () => {
+  const {error} = await supabase.from('appointments').insert(newAppointment).single()
 
   if (error) {
     console.error("Error adding appointment", error.message)
+    return
   }
 
-  // appointment = {
-  //   name: "",
-  //   email: "",
-  //   phone: "",
-  //   department: "",
-  //   date: "",
-  //   doctor: "",
-  //   message: ""
-  // };
+  newAppointment = {
+    name: "",
+    email: "",
+    phone: "",
+    department: "",
+    date: "",
+    doctor: "",
+    message: ""
+  };
 
 }
+
+let appointments = []
+
+// This runs once when the page is fully loaded
+window.addEventListener('DOMContentLoaded', () => {
+  fetchAppointments();
+});
+
+const fetchAppointments = async () => {
+  const {error, data} = await supabase
+    .from('appointments')
+    .select("*")
+    .order('created_at', { ascending: true })
+
+  if (error) {
+    console.error("Error reading appointment", error.message)
+    return
+  }
+
+  console.log('data', data)
+
+  appointments = data
+  console.log(appointments)
+}
+
+console.log('app', appointments)
+
