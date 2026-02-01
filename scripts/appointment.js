@@ -38,7 +38,7 @@ const handleSubmit = async () => {
     user_id: user.id
   };
 
-  const { error } = await supabase.from('appointments').insert(appointmentToInsert).single();
+  const { error } = await supabase.from('appointments').insert(appointmentToInsert);
   if (error) {
     console.error("Error adding appointment", error.message);
     return;
