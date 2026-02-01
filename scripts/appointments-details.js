@@ -41,28 +41,27 @@ const fetchAppointments = async () => {
     `;
   }).join('');
 
-  // Add Delete functionality
   container.querySelectorAll('.delete-btn').forEach(btn => {
-    btn.addEventListener('click', () => deleteAppointment(parseInt(btn.dataset.id)));
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      deleteAppointment(parseInt(btn.dataset.id));
+    });
   });
 
-  // Add Edit functionality
   container.querySelectorAll('.edit-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const row = btn.closest('.appointment-row');
-      toggleEdit(row, btn);
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      toggleEdit(btn.closest('.appointment-row'), btn);
     });
   });
 };
 
-// Delete function
 const deleteAppointment = async (id) => {
   const { error } = await supabase.from('appointments').delete().eq('id', id);
   if (error) return console.error("Error deleting appointment", error.message);
   fetchAppointments();
 };
 
-// Edit/Save toggle (same as before)
 const toggleEdit = (row, btn) => {
   if (btn.textContent === "Edit") {
     fields.forEach(f => {
@@ -75,8 +74,7 @@ const toggleEdit = (row, btn) => {
     fields.forEach(f => {
       updatedData[f.key] = row.querySelector(`.edit-${f.key}`).value;
     });
-    const id = parseInt(row.dataset.id);
-    updateAppointment(id, updatedData);
+    updateAppointment(parseInt(row.dataset.id), updatedData);
   }
 };
 
