@@ -194,4 +194,17 @@ window.addEventListener("DOMContentLoaded", async () => {
   });
 
   await updateSession();
+
+
+  const currentPage = window.location.pathname.split("/").pop() || "index.html";
+
+  document.querySelectorAll("#navmenu a").forEach(link => {
+    const linkPage = link.getAttribute("href");
+    link.classList.remove("active");
+
+    if (linkPage === currentPage) {
+      link.classList.add("active");
+    }
+  });
+
 });
