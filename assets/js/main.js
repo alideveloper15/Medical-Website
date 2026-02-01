@@ -151,65 +151,53 @@
 
 
 
-
 import { supabase } from "../../scripts/supabase-client.js";
 import { initAuth } from "../../scripts/authentication.js";
 
-window.addEventListener("DOMContentLoaded", () => {
-  const authContainer = document.getElementById("main-container");
+window.addEventListener("DOMContentLoaded", async () => {
+  const formWrapper = document.getElementById("form-wrapper");
+  const mainContainer = document.getElementById("main-container");
   const homeContent = document.getElementById("home-content");
   const logoutBtn = document.getElementById("logout-btn");
+
+  if (!formWrapper || !mainContainer || !homeContent || !logoutBtn) return;
+
   let session = null;
 
-  function render() {
-    const formWrapper = document.getElementById("form-wrapper");
-    const homeContent = document.getElementById("home-content");
-    const logoutBtn = document.getElementById("logout-btn");
-
-    if (!formWrapper) return;
+  const render = () => {
+    if (!formWrapper || !homeContent || !logoutBtn) return;
 
     if (session) {
       formWrapper.style.display = "none";
-      if (homeContent) homeContent.style.display = "block";
-      if (logoutBtn) logoutBtn.style.display = "inline-block";
+      homeContent.style.display = "block";
+      logoutBtn.style.display = "inline-block";
     } else {
       formWrapper.style.display = "flex";
-      if (homeContent) homeContent.style.display = "none";
-      if (logoutBtn) logoutBtn.style.display = "none";
-    }
-  }
+      homeContent.style.display = "none";
+      logoutBtn.style.display = "none";
 
-
-
-  
-  if (logoutBtn) {
-    logoutBtn.addEventListener("click", async () => {
-      const { error } = await supabase.auth.signOut();
-      if (error) alert("Logout failed: " + error.message);
-      else {
-        session = null;
-        render();
+      if (!mainContainer.hasChildNodes()) {
+        initAuth(mainContainer);
       }
-    });
-  }
+    }
+  };
 
-  
-  async function fetchSession() {
+  const fetchSession = async () => {
     const { data } = await supabase.auth.getSession();
     session = data.session;
     render();
-  }
+  };
 
-  
-  const { data: authListener } = supabase.auth.onAuthStateChange((_event, newSession) => {
+  logoutBtn.addEventListener("click", async () => {
+    await supabase.auth.signOut();
+    session = null;
+    render();
+  });
+
+  supabase.auth.onAuthStateChange((_event, newSession) => {
     session = newSession;
     render();
   });
 
-  fetchSession();
-
-  // Clean up
-  window.addEventListener("beforeunload", () => {
-    authListener.subscription.unsubscribe();
-  });
+  await fetchSession();
 });

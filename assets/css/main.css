@@ -4993,7 +4993,7 @@ section,
   cursor: pointer;
 }
 
-.logOut-btn{
+#logout-btn{
   background-color: red;
   color: white;
   font-weight: bold;
@@ -5004,7 +5004,7 @@ section,
   margin-left: 5px;
 }
 
-.logOut-btn:hover{
+#logout-btn:hover{
   background-color: #df1529;
 }
 
