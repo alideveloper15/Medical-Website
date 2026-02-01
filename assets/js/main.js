@@ -6,6 +6,8 @@
 * License: https://bootstrapmade.com/license/
 */
 
+import { logout } from "../../scripts/authentication";
+
 (function() {
   "use strict";
 
@@ -143,5 +145,5 @@
       faqItem.parentNode.classList.toggle('faq-active');
     });
   });
-
 })();
+

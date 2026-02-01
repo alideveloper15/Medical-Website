@@ -1,7 +1,5 @@
 import { supabase } from  './supabase-client.js'
 
-let appointments = []
-
 const fetchAppointments = async () => { 
   let appointmentsDetails = '';
 
